@@ -5,6 +5,11 @@
       "user_display_name": "user 1"
     },
     {
+      "user_id": "48",
+      "user_name": "user-joel",
+      "user_display_name": "user joel"
+    },
+    {
       "user_id": "2",
       "user_name": "user2",
       "user_display_name": "user 2"
