@@ -20,6 +20,8 @@ const ContactsScreen = () => {
 
   useEffect(() => {
     voximplant.on(Voximplant.ClientEvents.IncomingCall, incomingCallEvent => {
+      console.log("THIS IS IC CALL EVENT", incomingCallEvent);
+      console.log("THIS IS IC CALL EVENT DOT CALL", incomingCallEvent.call);
       navigation.navigate('IncomingCall', {call: incomingCallEvent.call});
     });
 

@@ -6,7 +6,7 @@ import {
   Pressable,
   PermissionsAndroid,
   Alert,
-  Platform,
+  Platform, 
 } from 'react-native';
 import CallActionBox from '../../components/callActionBox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -81,7 +81,14 @@ const CallingScreen = () => {
       endpoint.current = call.current.getEndpoints()[0];
       subscribeToEndpointEvent();
       call.current.answer(callSettings);
+      // call.current.setUseSpeaker(true);
+      // Voximplant.Hardware.AudioDeviceManager.selectAudioDevice('SPEAKER');  7
     };
+
+    // Voximplant.SDK.on(Voximplant.EventTypes.CallConnected, (e) => {
+    //   const call = e.call;
+    //   call.setUseSpeaker(true); // Use the device speaker as audio output
+    // });
 
     const subscribeToCallEvents = () => {
       call.current.on(Voximplant.CallEvents.Failed, callEvent => {
@@ -158,6 +165,7 @@ const CallingScreen = () => {
       <Voximplant.VideoView
         videoStreamId={localVideoStreamId}
         style={styles.localVideo}
+        showOnTop={true}
       />
 
       <View style={styles.cameraPreview}>
