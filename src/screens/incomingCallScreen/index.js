@@ -10,8 +10,8 @@ import {Voximplant} from 'react-native-voximplant';
 const IncomingCallScreen = () => {
   const [caller, setCaller] = useState('');
   const route = useRoute();
-  const navigation = useNavigation();
   const {call} = route.params;
+  const navigation = useNavigation();
 
   useEffect(() => {
     setCaller(call.getEndpoints()[0].displayName);

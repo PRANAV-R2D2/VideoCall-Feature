@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Voximplant} from 'react-native-voximplant'
 
 const CallActionBox = ({onHangupPress}) => {
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -16,6 +17,13 @@ const CallActionBox = ({onHangupPress}) => {
   };
 
   const onToggleMicrophone = () => {
+    if (isMicOn) {
+      // Voximplant.call.unmuteMicrophone();
+      console.log("UnMute microphone triggered");
+    } else {
+      // Voximplant.call.muteMicrophone();
+      console.log("Mute microphone triggered");
+    }
     setIsMicOn(currentValue => !currentValue);
   };
 
