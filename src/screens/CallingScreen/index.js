@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef}  from 'react';
 import {
   View,
   Text,
@@ -6,12 +6,16 @@ import {
   Pressable,
   PermissionsAndroid,
   Alert,
-  Platform, 
+  Platform,
+  UIManager,
+  findNodeHandle,
+  Dimensions,
+  Button
 } from 'react-native';
 import CallActionBox from '../../components/callActionBox';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation, useRoute} from '@react-navigation/core';
-import {Voximplant} from 'react-native-voximplant';
+import {Voximplant, AudioDevice} from 'react-native-voximplant';
 
 const permissions = [
   PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
@@ -23,6 +27,11 @@ const CallingScreen = () => {
   const [callStatus, setCallStatus] = useState('Initializing...');
   const [localVideoStreamId, setLocalVideoStreamId] = useState('');
   const [remoteVideoStreamId, setRemoteVideoStreamId] = useState('');
+  // const [speaker, setSpeaker] = useState();
+
+  const handleSpeaker = () => {
+    Voximplant.Hardware.IAudioDeviceManager.selectAudioDevice('SPEAKER')
+  }
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -151,6 +160,37 @@ const CallingScreen = () => {
     call.current.hangup();
   };
 
+    const CameraManager = Voximplant.Hardware.CameraManager.getInstance();
+    const cameraType = Voximplant.Hardware.CameraType;
+
+    const [cameraState, setCameraState] = useState(cameraType.FRONT);
+
+    const toggleCameraMode = () => {
+        if (cameraState === cameraType.FRONT) {
+          CameraManager.switchCamera(cameraType.BACK);
+          setCameraState(cameraType.BACK);
+        } else {
+          CameraManager.switchCamera(cameraType.FRONT);
+          setCameraState(cameraType.FRONT);
+        }
+      };
+
+    // const audioManager = Voximplant.Hardware.AudioDeviceManager.getInstance();
+    // const audioType = Voximplant.Hardware.AudioDevice;
+
+    // const [audioState, setAudioState] = useState(audioType.BLUETOOTH);
+    
+    // const toggleMute = () => {
+    //   if (audioState === audioType.BLUETOOTH) {
+    //     audioManager.selectAudioDevice(audioType.SPEAKER);
+    //     setAudioState(audioType.SPEAKER)
+    //   } else {
+    //     audioManager.selectAudioDevice(audioType.BLUETOOTH);
+    //     setAudioState(audioType.BLUETOOTH)
+    //   }
+    // }
+    
+
   return (
     <View style={styles.page}>
       <Pressable onPress={goBack} style={styles.backButton}>
@@ -173,7 +213,11 @@ const CallingScreen = () => {
         <Text style={styles.phoneNumber}>{callStatus}</Text>
       </View>
 
-      <CallActionBox onHangupPress={onHangupPress} />
+      <CallActionBox onHangupPress={onHangupPress} toggleCameraMode={toggleCameraMode} />
+      {/* <Button
+      title="reverse camera"
+        onPress={toggleMute}
+      /> */}
     </View>
   );
 };

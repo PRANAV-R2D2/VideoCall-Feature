@@ -4,12 +4,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Voximplant} from 'react-native-voximplant'
 
-const CallActionBox = ({onHangupPress}) => {
+const CallActionBox = ({onHangupPress, toggleCameraMode}) => {
   const [isCameraOn, setIsCameraOn] = useState(true);
+  const [reverseCamera, setReverseCamera] = useState();
   const [isMicOn, setIsMicOn] = useState(true);
 
   const onReverseCamera = () => {
     console.warn('onReverseCamera');
+    // reverseProp()
   };
 
   const onToggleCamera = () => {
@@ -29,7 +31,7 @@ const CallActionBox = ({onHangupPress}) => {
 
   return (
     <View style={styles.buttonsContainer}>
-      <Pressable onPress={onReverseCamera} style={styles.iconButton}>
+      <Pressable onPress={toggleCameraMode} style={styles.iconButton}>
         <Ionicons name="ios-camera-reverse" size={30} color={'white'} />
       </Pressable>
 
